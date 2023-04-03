@@ -141,7 +141,7 @@ public struct RefreshableScrollView<Progress, Content>: View where Progress: Vie
       }
       // Put a fixed PositionIndicator in the background so that we have
       // a reference point to compute the scroll offset.
-    .background(PositionIndicator(type: .fixed, inverted: inverted))
+      .background(PositionIndicator(type: .fixed, inverted: inverted))
       // Once the scrolling offset changes, we want to see if there should
       // be a state change.
       .onPreferenceChange(PositionPreferenceKey.self) { values in
