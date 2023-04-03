@@ -149,7 +149,7 @@ public struct RefreshableScrollView<Progress, Content>: View where Progress: Vie
               // Compute the offset between the moving and fixed PositionIndicators
               let movingY = values.first { $0.type == .moving }?.y ?? 0
               let fixedY = values.first { $0.type == .fixed }?.y ?? 0
-              offset = movingY - fixedY
+              offset = abs(movingY - fixedY)
               if state != .loading { // If we're already loading, ignore everything
                 // Map the preference change action to the UI thread
 
