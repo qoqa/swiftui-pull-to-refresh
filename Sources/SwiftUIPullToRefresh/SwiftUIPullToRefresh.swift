@@ -149,7 +149,9 @@ public struct RefreshableScrollView<Progress, Content>: View where Progress: Vie
               // Compute the offset between the moving and fixed PositionIndicators
               let movingY = values.first { $0.type == .moving }?.y ?? 0
               let fixedY = values.first { $0.type == .fixed }?.y ?? 0
-              offset = abs(movingY - fixedY)
+
+              offset = inverted ? fixedY - movingY : movingY - fixedY
+
               if state != .loading { // If we're already loading, ignore everything
                 // Map the preference change action to the UI thread
 
@@ -186,12 +188,14 @@ public struct RefreshableScrollView<Progress, Content>: View where Progress: Vie
 public extension RefreshableScrollView where Progress == RefreshActivityIndicator {
     init(showsIndicators: Bool = true,
          inverted: Bool = false,
+         shouldTriggerHapticFeedback: Bool = false,
          loadingViewBackgroundColor: Color = defaultLoadingViewBackgroundColor,
          threshold: CGFloat = defaultRefreshThreshold,
          onRefresh: @escaping OnRefresh,
          @ViewBuilder content: @escaping () -> Content) {
         self.init(showsIndicators: showsIndicators,
                   inverted: inverted,
+                  shouldTriggerHapticFeedback: shouldTriggerHapticFeedback,
                   loadingViewBackgroundColor: loadingViewBackgroundColor,
                   threshold: threshold,
                   onRefresh: onRefresh,
@@ -233,6 +237,7 @@ public struct RefreshActivityIndicator: UIViewRepresentable {
 public extension RefreshableScrollView {
     init(showsIndicators: Bool = true,
          inverted: Bool = false,
+         shouldTriggerHapticFeedback: Bool = false,
          loadingViewBackgroundColor: Color = defaultLoadingViewBackgroundColor,
          threshold: CGFloat = defaultRefreshThreshold,
          action: @escaping @Sendable () async -> Void,
@@ -240,6 +245,7 @@ public extension RefreshableScrollView {
          @ViewBuilder content: @escaping () -> Content) {
         self.init(showsIndicators: showsIndicators,
                   inverted: inverted,
+                  shouldTriggerHapticFeedback: shouldTriggerHapticFeedback,
                   loadingViewBackgroundColor: loadingViewBackgroundColor,
                   threshold: threshold,
                   onRefresh: { refreshComplete in

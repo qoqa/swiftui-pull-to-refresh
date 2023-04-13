@@ -135,6 +135,7 @@ Check out [this recipe](https://swiftuirecipes.com/blog/pull-to-refresh-with-swi
 
 ## Changelog
 
+* 1.1.11 - Fix wrong scroll triggering
 * 1.1.10 - Added `inverted` to allow the usage with an inverted `ScrollView`
 * 1.1.9 - Reworked haptic feedback, added haptic feedback as optional.
 * 1.1.8 - Fixed crash when doing two pulls quickly in succession.
